@@ -1,3 +1,6 @@
+//go:build !testut
+// +build !testut
+
 /*
  * Copyright 2024 The Kmesh Authors.
  *

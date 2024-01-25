@@ -1,0 +1,32 @@
+name: Kmesh Unit Test Workflow
+
+on: pull_request
+
+jobs:
+
+  build:
+    runs-on: ubuntu-22.04
+
+    env:
+      PKG_CONFIG_PATH: $GITHUB_WORKSPACE/mk
+
+    strategy:
+      matrix:
+        go-version: [ '1.21' ]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Go
+      uses: actions/setup-go@v4.0.0
+      with:
+        go-version: ${{ matrix.go-version }}
+
+    - name: Set enviroments
+      run: |
+        find $GITHUB_WORKSPACE/mk -name "*.pc" | xargs sed -i "s#^prefix=.*#prefix=$GITHUB_WORKSPACE#g"
+        echo "PKG_CONFIG_PATH=$GITHUB_WORKSPACE/mk" >> $GITHUB_ENV
+
+    - name: Go Test
+      run: |
+        go test -v -vet=off ./...

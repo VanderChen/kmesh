@@ -1,4 +1,5 @@
-// +build enhanced
+//go:build enhanced || ignore || !testut
+// +build enhanced ignore !testut
 
 /*
  * Copyright 2023 The Kmesh Authors.
@@ -46,8 +47,8 @@ type BpfSockOps struct {
 
 type BpfKmesh struct {
 	TracePoint BpfTracePoint
-	SockConn BpfSockConn
-	SockOps  BpfSockOps
+	SockConn   BpfSockConn
+	SockOps    BpfSockOps
 }
 
 func (sc *BpfTracePoint) NewBpf(cfg *Config) {
@@ -93,7 +94,7 @@ func NewBpfKmesh(cfg *Config) (BpfKmesh, error) {
 
 func (sc *BpfTracePoint) loadKmeshTracePointObjects() (*ebpf.CollectionSpec, error) {
 	var (
-		err error
+		err  error
 		spec *ebpf.CollectionSpec
 		opts ebpf.CollectionOptions
 	)
@@ -314,7 +315,7 @@ func (sc *BpfKmesh) ApiEnvCfg() error {
 }
 
 func (sc *BpfTracePoint) Attach() error {
-	tpopt := link.RawTracepointOptions {
+	tpopt := link.RawTracepointOptions{
 		Name:    "connect_ret",
 		Program: sc.KmeshTracePointObjects.ConnectRet,
 	}

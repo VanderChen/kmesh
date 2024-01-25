@@ -166,3 +166,8 @@ clean:
 	$(QUIET) make clean -C bpf/deserialization_to_bpf_map
 	$(call printlog, CLEAN, "kernel")
 	$(QUIET) make clean -C kernel/ko_src
+
+test-ut:
+	$(QUIET) find $(ROOT_DIR)/mk -name "*.pc" | xargs sed -i "s#^prefix=.*#prefix=${ROOT_DIR}#g"
+	$(QUIET) (export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(ROOT_DIR)mk; \
+		$(GO) test -v -vet=off -tags testut ./pkg/...)

@@ -1,4 +1,4 @@
-prefix=
+prefix=/home/vander0x00/workplace/kmesh/
 Name: bpf
 Description: bpf
 Version:
