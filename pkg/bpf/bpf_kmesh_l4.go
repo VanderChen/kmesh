@@ -1,5 +1,5 @@
-//go:build !enhanced
-// +build !enhanced
+//go:build !enhanced && !testut
+// +build !enhanced,!testut
 
 /*
  * Copyright 2023 The Kmesh Authors.
